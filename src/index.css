@@ -106,7 +106,6 @@ label {
   color: var(--text-muted);
 }
 
-/* Likert Scale Radio Buttons */
 .likert-group {
   display: flex;
   gap: 16px;
@@ -150,4 +149,86 @@ label {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-muted);
+}
+
+/* Responsive Styling for Mobile */
+@media (max-width: 768px) {
+  .survey-container {
+    padding: 0 10px !important;
+    margin: 20px auto !important;
+  }
+  
+  .glass-panel {
+    padding: 20px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  h1 {
+    font-size: 1.8rem !important;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.4rem !important;
+  }
+  
+  /* Expert Name and District grid to column */
+  form > div:first-of-type {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+    margin-bottom: 25px !important;
+  }
+  
+  /* Make Likert items wrap gracefully */
+  .likert-group {
+    flex-wrap: wrap;
+    gap: 12px !important;
+    justify-content: flex-start;
+  }
+  
+  .likert-item {
+    padding: 5px;
+  }
+  
+  .likert-item input[type="radio"] {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Indicator title and type tag wrapping */
+  .glass-panel > div > div:first-child {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px;
+  }
+  
+  .glass-panel > div > div > span:first-child {
+    max-width: 100% !important;
+  }
+  
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  table {
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  /* Navigation Bar adaptation */
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px !important;
+    gap: 12px !important;
+  }
+  
+  nav > div:first-child {
+    margin-right: auto !important;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
 }

@@ -96,7 +96,8 @@ export default function Dashboard() {
 
         <div style={{ marginTop: '40px' }}>
           <h3 style={{ color: 'var(--primary-light)' }}>Data Summary</h3>
-          <table style={{ width: '100%', marginTop: '15px', borderCollapse: 'collapse' }}>
+          <div className="table-responsive">
+            <table style={{ width: '100%', marginTop: '15px', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid var(--border)', textAlign: 'left' }}>
                 <th style={{ padding: '10px' }}>District</th>
@@ -126,7 +127,8 @@ export default function Dashboard() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         </div>
       </div>
     </div>
