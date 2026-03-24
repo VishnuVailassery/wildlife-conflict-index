@@ -3,6 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { getSurveyResponses } from '../services/db';
 import { calculateDistrictIndex, getCategory } from '../utils/calculations';
+import KeralaMap from '../components/KeralaMap';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -90,8 +91,16 @@ export default function Dashboard() {
       <div className="glass-panel" style={{ padding: '30px' }}>
         <h1 style={{ color: 'var(--primary)', marginBottom: '20px' }}>District Conflict Index Dashboard</h1>
         
-        <div style={{ background: 'white', padding: '20px', borderRadius: '12px' }}>
-          <Bar data={chartData} options={options} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+          <div>
+            <h3 style={{ marginBottom: '15px', color: 'var(--primary-light)' }}>Geographic Risk Map</h3>
+            <KeralaMap districtData={districtData} />
+          </div>
+
+          <div style={{ background: 'white', padding: '20px', borderRadius: '12px' }}>
+            <h3 style={{ marginBottom: '15px', color: 'var(--text-muted)' }}>Index Value Comparison Graph</h3>
+            <Bar data={chartData} options={options} />
+          </div>
         </div>
 
         <div style={{ marginTop: '40px' }}>
