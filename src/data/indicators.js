@@ -17,7 +17,7 @@ export const indicatorsData = [
     domain: "Environmental",
     indicators: [
       { id: "env1", name: "Extreme weather conditions", type: "Exposure" },
-      { id: "env2", name: "Crop types", type: "Sensitivity" }
+      { id: "env2", name: "Influence of agricultural crop types (banana, jackfruit, mango, etc.)", type: "Sensitivity" }
     ]
   },
   {
@@ -35,7 +35,7 @@ export const indicatorsData = [
       { id: "soc3", name: "Impact on daily activities", type: "Sensitivity" },
       { 
         id: "soc4", 
-        name: "Severity of Human–Wildlife Conflict Impacts", 
+        name: "Impact of HWC on daily activities", 
         type: "Sensitivity",
         labels: {
           0: "No conflict",
