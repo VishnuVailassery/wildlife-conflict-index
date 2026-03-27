@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getSurveyResponses, deleteSurveyResponse } from '../services/db';
-import { Trash2 } from 'lucide-react';
+import { Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { indicatorsData } from '../data/indicators';
 
 export default function ResponsesPage() {
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     loadData();
@@ -49,12 +51,19 @@ export default function ResponsesPage() {
               </thead>
               <tbody>
                 {responses.map((res, i) => (
-                  <tr key={res.id || i} style={{ borderBottom: '1px solid #eee' }}>
+                  <React.Fragment key={res.id || i}>
+                  <tr style={{ borderBottom: '1px solid #eee', background: expandedId === (res.id || i) ? '#f8fafc' : 'transparent' }}>
                     <td style={{ padding: '10px', fontWeight: '500' }}>{res.expertName}</td>
                     <td>{res.designation || 'N/A'}</td>
                     <td>{res.district}</td>
                     <td>{res.timestamp ? new Date(res.timestamp).toLocaleString() : 'N/A'}</td>
-                    <td>
+                    <td style={{ display: 'flex', gap: '10px', alignItems: 'center', height: '100%' }}>
+                      <button 
+                        onClick={() => setExpandedId(expandedId === (res.id || i) ? null : (res.id || i))} 
+                        style={{ background: 'var(--accent-pale)', border: 'none', color: 'var(--primary)', cursor: 'pointer', padding: '6px 12px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85rem', fontWeight: 'bold' }}
+                      >
+                        {expandedId === (res.id || i) ? <><ChevronUp size={16}/> Hide</> : <><ChevronDown size={16}/> View Details</>}
+                      </button>
                       <button 
                         onClick={() => handleDelete(res.id)} 
                         style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '5px' }}
@@ -64,6 +73,29 @@ export default function ResponsesPage() {
                       </button>
                     </td>
                   </tr>
+                  {expandedId === (res.id || i) && (
+                    <tr>
+                      <td colSpan="5" style={{ padding: '20px', background: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
+                        <h4 style={{ color: 'var(--primary)', marginBottom: '15px' }}>Detailed Ratings for {res.expertName}</h4>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '15px' }}>
+                          {indicatorsData.map(domain => (
+                            <div key={domain.domain} style={{ background: 'white', padding: '15px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                              <strong style={{ display: 'block', marginBottom: '10px', color: 'var(--primary-light)', borderBottom: '1px solid #eee', paddingBottom: '5px' }}>{domain.domain}</strong>
+                              {domain.indicators.map(ind => (
+                                <div key={ind.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.9rem' }}>
+                                  <span style={{ color: 'var(--text-muted)', maxWidth: '80%' }}>{ind.name}</span>
+                                  <span style={{ fontWeight: 'bold', background: 'var(--accent-pale)', padding: '2px 8px', borderRadius: '12px', fontSize: '0.85rem' }}>
+                                    {res.ratings?.[ind.id] ?? '-'}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                  </React.Fragment>
                 ))}
               </tbody>
             </table>

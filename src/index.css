@@ -126,6 +126,7 @@ label {
   appearance: none;
   width: 28px;
   height: 28px;
+  flex-shrink: 0;
   border: 2px solid var(--border);
   border-radius: 50%;
   margin: 0;

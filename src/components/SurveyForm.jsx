@@ -43,6 +43,12 @@ export default function SurveyForm({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if (!formData.expertName.trim() || !formData.designation || !formData.district) {
+      alert("Please ensure Name, Designation, and District are filled.");
+      return;
+    }
+
     // Validate all answered
     let allAnswered = true;
     indicatorsData.forEach(domain => {
@@ -99,6 +105,7 @@ export default function SurveyForm({ onSubmit }) {
                 <option value="Government Officials">Government Officials</option>
                 <option value="Forest Department">Forest Department</option>
                 <option value="Observer">Observer</option>
+                <option value="Others">Others</option>
               </select>
             </div>
             <div>
