@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { indicatorsData } from '../data/indicators';
-import { Save, User, MapPin } from 'lucide-react';
+import { Save, User, MapPin, Briefcase } from 'lucide-react';
+import { getSurveyResponses } from '../services/db';
 
 export default function SurveyForm({ onSubmit }) {
   const [formData, setFormData] = useState({
     expertName: '',
+    designation: '',
     district: '',
     ratings: {}
   });
+  
+  const [districtCounts, setDistrictCounts] = useState({});
+
+  useEffect(() => {
+    async function fetchCounts() {
+      const responses = await getSurveyResponses();
+      const counts = {};
+      responses.forEach(r => {
+        const d = r.district?.trim();
+        if (d) counts[d] = (counts[d] || 0) + 1;
+      });
+      setDistrictCounts(counts);
+    }
+    fetchCounts();
+  }, []);
 
   const handleRatingChange = (id, value) => {
     setFormData(prev => ({
@@ -53,7 +70,7 @@ export default function SurveyForm({ onSubmit }) {
         </p>
 
         <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginBottom: '40px' }}>
             <div>
               <label><User size={18} style={{ verticalAlign: 'text-bottom', marginRight: '6px', color: 'var(--accent)' }}/> Expert Name</label>
               <input 
@@ -64,6 +81,25 @@ export default function SurveyForm({ onSubmit }) {
                 onChange={handleTextChange} 
                 required 
               />
+            </div>
+            <div>
+              <label><Briefcase size={18} style={{ verticalAlign: 'text-bottom', marginRight: '6px', color: 'var(--accent)' }}/> Designation</label>
+              <select 
+                name="designation" 
+                value={formData.designation} 
+                onChange={handleTextChange} 
+                required
+              >
+                <option value="" disabled>Select a designation</option>
+                <option value="Graduate Student">Graduate Student</option>
+                <option value="Postgraduate Student">Postgraduate Student</option>
+                <option value="Professionals">Professionals</option>
+                <option value="Urban Planner">Urban Planner</option>
+                <option value="Researcher">Researcher</option>
+                <option value="Government Officials">Government Officials</option>
+                <option value="Forest Department">Forest Department</option>
+                <option value="Observer">Observer</option>
+              </select>
             </div>
             <div>
               <label><MapPin size={18} style={{ verticalAlign: 'text-bottom', marginRight: '6px', color: 'var(--accent)' }}/> District / Region</label>
@@ -89,6 +125,11 @@ export default function SurveyForm({ onSubmit }) {
                 <option value="Thrissur">Thrissur</option>
                 <option value="Wayanad">Wayanad</option>
               </select>
+              {formData.district && (
+                <div style={{ marginTop: '8px', fontSize: '0.9rem', color: 'var(--primary)', fontWeight: '600' }}>
+                  Total Responses for {formData.district}: {districtCounts[formData.district] || 0}
+                </div>
+              )}
             </div>
           </div>
 
@@ -109,6 +150,17 @@ export default function SurveyForm({ onSubmit }) {
                     </span>
                   </div>
                   
+                  {indicator.labels && (
+                    <div style={{ fontSize: '0.9rem', color: 'var(--text-main)', marginBottom: '16px', padding: '12px', background: 'rgba(255,255,255,0.6)', border: '1px solid var(--border)', borderRadius: '8px' }}>
+                      <div style={{ fontWeight: '600', marginBottom: '8px', color: 'var(--primary)' }}>Scale Reference:</div>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '8px' }}>
+                        {Object.entries(indicator.labels).map(([key, text]) => (
+                          <div key={key}><strong>{key}</strong> &ndash; {text}</div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="likert-group">
                     {[0, 1, 2, 3, 4, 5].map((val) => (
                       <label key={val} className="likert-item" title={`Rating: ${val}`}>

@@ -2,7 +2,6 @@ export const indicatorsData = [
   {
     domain: "Spatial",
     indicators: [
-      { id: "s1", name: "Proximity to forest boundary", type: "Exposure" },
       { id: "s2", name: "Accessibility/Topographical constraints", type: "Exposure" },
       { id: "s3", name: "Encroachments", type: "Exposure" }
     ]
@@ -33,7 +32,20 @@ export const indicatorsData = [
     indicators: [
       { id: "soc1", name: "Population Density", type: "Sensitivity" },
       { id: "soc2", name: "Community participation in mitigation efforts", type: "Adaptive capacity" },
-      { id: "soc3", name: "Impact on daily activities", type: "Sensitivity" }
+      { id: "soc3", name: "Impact on daily activities", type: "Sensitivity" },
+      { 
+        id: "soc4", 
+        name: "Severity of Human–Wildlife Conflict Impacts", 
+        type: "Sensitivity",
+        labels: {
+          0: "No conflict",
+          1: "Minor impacts (crop damage only)",
+          2: "Moderate impacts (property damage)",
+          3: "Significant impacts (livestock loss)",
+          4: "High impacts (human injury)",
+          5: "Extreme impacts (human death cases reported)"
+        }
+      }
     ]
   },
   {

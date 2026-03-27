@@ -89,7 +89,12 @@ export default function Dashboard() {
   return (
     <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '0 20px' }}>
       <div className="glass-panel" style={{ padding: '30px' }}>
-        <h1 style={{ color: 'var(--primary)', marginBottom: '20px' }}>District Conflict Index Dashboard</h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '15px' }}>
+          <h1 style={{ color: 'var(--primary)', margin: 0 }}>District Conflict Index Dashboard</h1>
+          <div style={{ background: 'var(--accent)', color: 'white', padding: '10px 20px', borderRadius: '8px', fontWeight: 'bold' }}>
+            Total Responses: {districtData.reduce((acc, curr) => acc + curr.experts, 0)}
+          </div>
+        </div>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           <div>

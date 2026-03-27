@@ -2,8 +2,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import SurveyForm from './components/SurveyForm';
 import Dashboard from './pages/Dashboard';
+import ResponsesPage from './pages/Responses';
 import { saveSurveyResponse } from './services/db';
-import { LayoutDashboard, FileSpreadsheet } from 'lucide-react';
+import { LayoutDashboard, FileSpreadsheet, Database } from 'lucide-react';
 
 function Navigation() {
   return (
@@ -14,6 +15,9 @@ function Navigation() {
       </Link>
       <Link to="/dashboard" style={{ color: 'var(--accent-pale)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '500', transition: '0.2s' }} onMouseOver={(e)=>e.target.style.color='white'} onMouseOut={(e)=>e.target.style.color='var(--accent-pale)'}>
         <LayoutDashboard size={20} /> Analytics Dashboard
+      </Link>
+      <Link to="/responses" style={{ color: 'var(--accent-pale)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '500', transition: '0.2s' }} onMouseOver={(e)=>e.target.style.color='white'} onMouseOut={(e)=>e.target.style.color='var(--accent-pale)'}>
+        <Database size={20} /> Responses Data
       </Link>
     </nav>
   );
@@ -43,6 +47,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<SurveyPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/responses" element={<ResponsesPage />} />
       </Routes>
     </BrowserRouter>
   );
